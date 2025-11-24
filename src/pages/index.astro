@@ -4,8 +4,12 @@ import Layout from "../layouts/Layout.astro";
 // Trust badges
 const badges = [
   { label: "Open Source", sublabel: "Apache 2.0" },
-  { label: "Built on Polkadot", sublabel: "Substrate" },
+  { label: "Built on Polkadot SDK" },
 ];
+
+// Grant application URL
+const grantApplicationUrl =
+  "https://github.com/PolkadotOpenSourceGrants/apply/blob/61dbb435c6eeadd2618b5540fa449696fd8cf975/applications/clad_sovereign.md";
 
 // Problem/Solution pairs
 const problemSolution = [
@@ -85,9 +89,9 @@ const differentiators = [
   {
     title: "Proven Technology",
     points: [
-      "Built on Polkadot/Substrate",
+      "Built on Polkadot SDK (Substrate)",
       "Paraguay sovereign equity precedent",
-      "Active institutional adoption globally",
+      "Growing institutional adoption globally",
     ],
   },
 ];
@@ -190,18 +194,18 @@ const useCases = [
             class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-[var(--color-navy)] opacity-0 animate-fade-in-up"
             style="animation-delay: 0.1s"
           >
-            Sovereign Bond Issuance<br class="hidden sm:block" />
-            Without Western Dependency
+            Your Bonds. Your Infrastructure.<br class="hidden sm:block" />
+            Your Terms.
           </h1>
 
           <!-- Subheadline -->
           <p
-            class="text-lg md:text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto opacity-0 animate-fade-in-up"
+            class="text-lg md:text-xl text-[var(--color-text-muted)] max-w-3xl mx-auto opacity-0 animate-fade-in-up"
             style="animation-delay: 0.2s"
           >
             Open-source infrastructure for tokenized debt issuance. Configure
-            your bond, approve with a tap, settle in seconds. Full sovereign
-            control over your financial rails.
+            your bond, approve with a tap, settle in seconds. No intermediaries.
+            No lock-in.
           </p>
 
           <!-- CTAs -->
@@ -216,12 +220,12 @@ const useCases = [
               Schedule a Briefing
             </a>
             <a
-              href="https://github.com/clad-sovereign/clad-studio"
+              href={grantApplicationUrl}
               target="_blank"
               rel="noreferrer"
               class="btn btn-secondary w-full sm:w-auto"
             >
-              View Documentation
+              Read Grant Application
             </a>
           </div>
         </div>
