@@ -120,6 +120,20 @@ pre {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Staggered animation delays */
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
@@ -246,6 +260,12 @@ pre {
 /* Gold accent */
 .accent-gold {
   color: var(--color-gold);
+}
+
+/* How It Works connector lines */
+.connector-line {
+  left: calc(50% + 2rem);
+  right: calc(-50% + 2rem);
 }
 
 /* Print styles */
