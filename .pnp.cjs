@@ -32,6 +32,7 @@ const RAW_RUNTIME_STATE =
           ["@tailwindcss/vite", "virtual:2ff0d6075e021e4759f1bce06ac9d4d099494fa57042d1ab6de8c192e063d29f5f5c2f1b97398cde4a654368079952ea2a2362e3e3bc58d31de639da149e68ec#npm:4.1.17"],\
           ["astro", "npm:5.16.0"],\
           ["clad-website", "workspace:."],\
+          ["sharp", "npm:0.34.5"],\
           ["solid-js", "npm:1.9.10"],\
           ["tailwindcss", "npm:4.1.17"]\
         ],\
@@ -2098,6 +2099,7 @@ const RAW_RUNTIME_STATE =
           ["@tailwindcss/vite", "virtual:2ff0d6075e021e4759f1bce06ac9d4d099494fa57042d1ab6de8c192e063d29f5f5c2f1b97398cde4a654368079952ea2a2362e3e3bc58d31de639da149e68ec#npm:4.1.17"],\
           ["astro", "npm:5.16.0"],\
           ["clad-website", "workspace:."],\
+          ["sharp", "npm:0.34.5"],\
           ["solid-js", "npm:1.9.10"],\
           ["tailwindcss", "npm:4.1.17"]\
         ],\
