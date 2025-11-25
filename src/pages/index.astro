@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ContactForm from "../components/ContactForm.tsx";
+import ErrorBoundary from "../components/ErrorBoundary.tsx";
 
 // Trust badges
 const badges = [
@@ -159,10 +161,10 @@ const useCases = [
           >
         </nav>
         <a
-          href="mailto:hello@clad.so"
+          href="#contact"
           class="btn btn-primary text-sm py-2 px-4"
         >
-          Schedule Briefing
+          Contact Us
         </a>
       </div>
     </header>
@@ -214,10 +216,10 @@ const useCases = [
             style="animation-delay: 0.3s"
           >
             <a
-              href="mailto:hello@clad.so"
+              href="#contact"
               class="btn btn-primary w-full sm:w-auto"
             >
-              Schedule a Briefing
+              Request a Briefing
             </a>
             <a
               href={grantApplicationUrl}
@@ -577,57 +579,80 @@ const useCases = [
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="section">
-      <div class="container max-w-3xl">
-        <div class="text-center">
-          <h2
-            class="font-serif text-2xl md:text-3xl text-[var(--color-navy)] mb-6"
-          >
-            About
-          </h2>
-          <p class="text-[var(--color-text-muted)]">
-            Clad Sovereign is developed by WIDEAS Technologies, focused on
-            building open-source infrastructure for sovereign financial systems.
-            Our work centers on enabling governments to issue and manage
-            tokenized debt instruments with full sovereignty over their
-            technology stack.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
+    <!-- About & Contact Section -->
     <section
+      id="contact"
       class="section bg-[var(--color-cream)] border-t border-[var(--color-border)]"
     >
-      <div class="container max-w-3xl text-center">
-        <h2
-          class="font-serif text-2xl md:text-3xl text-[var(--color-navy)] mb-4"
-        >
-          Interested in Learning More?
-        </h2>
-        <p class="text-[var(--color-text-muted)] mb-8 max-w-xl mx-auto">
-          We offer technical briefings for debt management offices and finance
-          ministries exploring tokenized issuance infrastructure.
-        </p>
-        <div
-          class="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a
-            href="mailto:hello@clad.so"
-            class="btn btn-primary w-full sm:w-auto"
+      <div class="container max-w-6xl">
+        <div class="text-center mb-12 md:mb-16">
+          <h2
+            class="font-serif text-2xl md:text-3xl text-[var(--color-navy)] mb-4"
           >
-            Request a Technical Briefing
-          </a>
-          <a
-            href="https://github.com/clad-sovereign"
-            target="_blank"
-            rel="noreferrer"
-            class="btn btn-secondary w-full sm:w-auto"
-          >
-            View on GitHub
-          </a>
+            Get in Touch
+          </h2>
+          <p class="text-[var(--color-text-muted)] max-w-2xl mx-auto">
+            We offer technical briefings for debt management offices and finance
+            ministries exploring tokenized issuance infrastructure.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <!-- About Column -->
+          <div class="lg:pr-8">
+            <h3 class="text-lg font-semibold text-[var(--color-navy)] mb-4">
+              About Clad Sovereign
+            </h3>
+            <p class="text-[var(--color-text-muted)] mb-6 leading-relaxed">
+              Clad Sovereign is developed by WIDEAS Technologies, focused on
+              building open-source infrastructure for sovereign financial systems.
+              Our work centers on enabling governments to issue and manage
+              tokenized debt instruments with full sovereignty over their
+              technology stack.
+            </p>
+            <p class="text-[var(--color-text-muted)] mb-8 leading-relaxed">
+              We believe nations should control their own financial infrastructure.
+              That's why everything we build is open-source, auditable, and
+              designed to run on your own terms.
+            </p>
+
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-[var(--color-navy)]/10 flex items-center justify-center flex-shrink-0">
+                <svg
+                  class="w-5 h-5 text-[var(--color-navy)]"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-[var(--color-slate-light)]">GitHub</p>
+                <a
+                  href="https://github.com/clad-sovereign"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-[var(--color-navy)] hover:underline"
+                >
+                  github.com/clad-sovereign
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form Column -->
+          <div class="lg:pl-8 lg:border-l lg:border-[var(--color-border)]">
+            <h3 class="text-lg font-semibold text-[var(--color-navy)] mb-6">
+              Request a Technical Briefing
+            </h3>
+            <ErrorBoundary client:load>
+              <ContactForm client:load />
+            </ErrorBoundary>
+          </div>
         </div>
       </div>
     </section>
@@ -635,33 +660,9 @@ const useCases = [
     <!-- Footer -->
     <footer class="py-8 border-t border-[var(--color-border)]">
       <div class="container">
-        <div
-          class="flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <div class="flex items-center gap-6">
-            <span class="text-sm text-[var(--color-text-muted)]">
-              &copy; 2025 WIDEAS Technologies
-            </span>
-            <span class="text-[var(--color-border)]">|</span>
-            <span class="badge text-xs">Open Source (Apache 2.0)</span>
-          </div>
-          <div class="flex items-center gap-6">
-            <a
-              href="mailto:hello@clad.so"
-              class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >
-              hello@clad.so
-            </a>
-            <a
-              href="https://github.com/clad-sovereign"
-              target="_blank"
-              rel="noreferrer"
-              class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
+        <p class="text-center text-xs text-[var(--color-slate-light)]">
+          &copy; {new Date().getFullYear()} WIDEAS Technologies · Clad Sovereign · Apache 2.0
+        </p>
       </div>
     </footer>
   </main>

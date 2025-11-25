@@ -1,0 +1,8 @@
+# Robots.txt for Clad Sovereign
+# https://clad.so
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://clad.so/sitemap.xml
