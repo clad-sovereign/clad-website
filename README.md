@@ -24,23 +24,3 @@ yarn build
 yarn preview
 ```
 
-## Project Structure
-
-```
-/
-├── public/
-│   ├── favicon.svg
-│   └── og-image.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   ├── pages/
-│   │   └── index.astro
-│   └── styles/
-│       └── global.css
-└── package.json
-```
-
-## License
-
-Apache 2.0
