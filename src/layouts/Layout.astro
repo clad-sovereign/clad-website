@@ -7,54 +7,54 @@ const description =
 const siteUrl = "https://clad.so";
 const socialImage = `${siteUrl}/og-image.png`;
 
-// JSON-LD structured data
-const organizationSchema = {
+// Combined JSON-LD structured data (single script for performance)
+const structuredData = {
 	"@context": "https://schema.org",
-	"@type": "Organization",
-	name: "Clad Sovereign",
-	description: description,
-	url: siteUrl,
-	logo: `${siteUrl}/favicon.svg`,
-	foundingDate: "2024",
-	parentOrganization: {
-		"@type": "Organization",
-		name: "WIDEAS Technologies",
-	},
-	sameAs: ["https://github.com/clad-sovereign"],
-};
-
-const softwareSchema = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Clad Sovereign",
-	applicationCategory: "FinanceApplication",
-	operatingSystem: "Web, iOS, Android",
-	description:
-		"Open-source infrastructure for tokenized sovereign bond issuance with mobile-native signing.",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
-	},
-	license: "https://www.apache.org/licenses/LICENSE-2.0",
-	maintainer: {
-		"@type": "Organization",
-		name: "WIDEAS Technologies",
-	},
-};
-
-const webPageSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebPage",
-	name: siteTitle,
-	description: description,
-	url: siteUrl,
-	inLanguage: "en-US",
-	isPartOf: {
-		"@type": "WebSite",
-		name: siteTitle,
-		url: siteUrl,
-	},
+	"@graph": [
+		{
+			"@type": "Organization",
+			name: "Clad Sovereign",
+			description: description,
+			url: siteUrl,
+			logo: `${siteUrl}/favicon.svg`,
+			foundingDate: "2024",
+			parentOrganization: {
+				"@type": "Organization",
+				name: "WIDEAS Technologies",
+			},
+			sameAs: ["https://github.com/clad-sovereign"],
+		},
+		{
+			"@type": "SoftwareApplication",
+			name: "Clad Sovereign",
+			applicationCategory: "FinanceApplication",
+			operatingSystem: "Web, iOS, Android",
+			description:
+				"Open-source infrastructure for tokenized sovereign bond issuance with mobile-native signing.",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			license: "https://www.apache.org/licenses/LICENSE-2.0",
+			maintainer: {
+				"@type": "Organization",
+				name: "WIDEAS Technologies",
+			},
+		},
+		{
+			"@type": "WebPage",
+			name: siteTitle,
+			description: description,
+			url: siteUrl,
+			inLanguage: "en-US",
+			isPartOf: {
+				"@type": "WebSite",
+				name: siteTitle,
+				url: siteUrl,
+			},
+		},
+	],
 };
 ---
 
@@ -84,15 +84,13 @@ const webPageSchema = {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImage} />
 
-		<!-- JSON-LD Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+		<!-- JSON-LD Structured Data (combined for performance) -->
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
-		<!-- Fonts - optimized with preload for critical fonts -->
+		<!-- Fonts - optimized with preload for critical fonts and font-display: swap -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<!-- Preload critical Inter font (used for body text) -->
+		<!-- Preload critical Inter font (used for body text) with swap for better performance -->
 		<link
 			rel="preload"
 			as="style"
@@ -102,7 +100,7 @@ const webPageSchema = {
 			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
 			rel="stylesheet"
 		/>
-		<!-- Load serif and mono fonts async (non-critical) -->
+		<!-- Load serif and mono fonts async (non-critical) with swap display -->
 		<link
 			href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
 			rel="stylesheet"

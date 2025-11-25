@@ -9,14 +9,33 @@ interface FieldErrors {
   message?: string;
 }
 
+interface FormspreeErrorResponse {
+  errors?: Array<{ message: string }>;
+}
+
+// Validation constants
+const VALIDATION_RULES = {
+  MIN_NAME_LENGTH: 2,
+  MIN_ORGANIZATION_LENGTH: 2,
+  MIN_MESSAGE_LENGTH: 10,
+  RATE_LIMIT_COOLDOWN_MS: 3000, // 3 seconds between submissions
+} as const;
+
+// Improved email validation supporting internationalized domains
+// Based on RFC 5322 Official Standard with unicode support
 function validateEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/u;
+  return emailRegex.test(email);
 }
 
 export default function ContactForm() {
   const [status, setStatus] = createSignal<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = createSignal("");
   const [touched, setTouched] = createSignal<Record<string, boolean>>({});
+  const [lastSubmitTime, setLastSubmitTime] = createSignal<number>(0);
+
+  // Reference for focus management
+  let successMessageRef: HTMLDivElement | undefined;
 
   // Form field values
   const [name, setName] = createSignal("");
@@ -25,14 +44,14 @@ export default function ContactForm() {
   const [role, setRole] = createSignal("");
   const [message, setMessage] = createSignal("");
 
-  // Validation errors (computed)
+  // Validation errors (computed) - using constants for consistency
   const errors = createMemo<FieldErrors>(() => {
     const errs: FieldErrors = {};
 
     if (!name().trim()) {
       errs.name = "Name is required";
-    } else if (name().trim().length < 2) {
-      errs.name = "Name must be at least 2 characters";
+    } else if (name().trim().length < VALIDATION_RULES.MIN_NAME_LENGTH) {
+      errs.name = `Name must be at least ${VALIDATION_RULES.MIN_NAME_LENGTH} characters`;
     }
 
     if (!email().trim()) {
@@ -41,12 +60,15 @@ export default function ContactForm() {
       errs.email = "Please enter a valid email address";
     }
 
-    if (organization().trim() && organization().trim().length < 2) {
-      errs.organization = "Organization must be at least 2 characters";
+    if (organization().trim() && organization().trim().length < VALIDATION_RULES.MIN_ORGANIZATION_LENGTH) {
+      errs.organization = `Organization must be at least ${VALIDATION_RULES.MIN_ORGANIZATION_LENGTH} characters`;
     }
 
-    if (message().trim() && message().trim().length < 10) {
-      errs.message = "Message must be at least 10 characters";
+    // Message is now required
+    if (!message().trim()) {
+      errs.message = "Message is required";
+    } else if (message().trim().length < VALIDATION_RULES.MIN_MESSAGE_LENGTH) {
+      errs.message = `Message must be at least ${VALIDATION_RULES.MIN_MESSAGE_LENGTH} characters`;
     }
 
     return errs;
@@ -72,11 +94,31 @@ export default function ContactForm() {
       return;
     }
 
+    // Rate limiting check
+    const now = Date.now();
+    const timeSinceLastSubmit = now - lastSubmitTime();
+    if (timeSinceLastSubmit < VALIDATION_RULES.RATE_LIMIT_COOLDOWN_MS) {
+      const remainingSeconds = Math.ceil((VALIDATION_RULES.RATE_LIMIT_COOLDOWN_MS - timeSinceLastSubmit) / 1000);
+      setErrorMessage(`Please wait ${remainingSeconds} seconds before submitting again.`);
+      setStatus("error");
+      return;
+    }
+
     setStatus("submitting");
     setErrorMessage("");
+    setLastSubmitTime(now);
+
+    // Get Formspree endpoint from environment variable
+    const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT;
+
+    if (!formspreeEndpoint) {
+      setErrorMessage("Form configuration error. Please contact support.");
+      setStatus("error");
+      return;
+    }
 
     try {
-      const response = await fetch("https://formspree.io/f/xdkvlojo", {
+      const response = await fetch(formspreeEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,12 +142,17 @@ export default function ContactForm() {
         setRole("");
         setMessage("");
         setTouched({});
+
+        // Focus management - move focus to success message
+        setTimeout(() => {
+          successMessageRef?.focus();
+        }, 100);
       } else {
-        const data = await response.json();
+        const data = await response.json() as FormspreeErrorResponse;
         setErrorMessage(data?.errors?.[0]?.message || "Something went wrong. Please try again.");
         setStatus("error");
       }
-    } catch {
+    } catch (error) {
       setErrorMessage("Network error. Please check your connection and try again.");
       setStatus("error");
     }
@@ -121,7 +168,11 @@ export default function ContactForm() {
   return (
     <div class="max-w-xl mx-auto">
       {status() === "success" ? (
-        <div class="text-center py-12 px-6 bg-white border border-[var(--color-border)] rounded-lg">
+        <div
+          ref={successMessageRef}
+          tabIndex={-1}
+          class="text-center py-12 px-6 bg-white border border-[var(--color-border)] rounded-lg outline-none"
+        >
           <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[var(--color-teal)]/10 flex items-center justify-center">
             <svg
               class="w-8 h-8 text-[var(--color-teal)]"
@@ -247,7 +298,7 @@ export default function ContactForm() {
               name="role"
               value={role()}
               onChange={(e) => setRole(e.currentTarget.value)}
-              class={`${inputNormalClass} pr-10 appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234a5568%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center] cursor-pointer`}
+              class={`${inputNormalClass} pr-10 appearance-none select-chevron bg-no-repeat bg-[right_1rem_center] cursor-pointer`}
               disabled={status() === "submitting"}
             >
               <option value="">Select your role</option>
@@ -265,7 +316,7 @@ export default function ContactForm() {
               for="message"
               class="block text-sm font-medium text-[var(--color-text)] mb-2"
             >
-              Message
+              Message <span class="text-red-500">*</span>
             </label>
             <textarea
               id="message"

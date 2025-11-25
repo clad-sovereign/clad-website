@@ -6,9 +6,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
     "@astrojs/solid-js": "^5.1.3",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.0",
@@ -16,6 +20,12 @@
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
-    "sharp": "^0.34.5"
+    "@solidjs/testing-library": "^0.8.10",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/jsdom": "^27",
+    "jsdom": "^27.2.0",
+    "sharp": "^0.34.5",
+    "vite-plugin-solid": "^2.11.10",
+    "vitest": "^4.0.13"
   }
 }
