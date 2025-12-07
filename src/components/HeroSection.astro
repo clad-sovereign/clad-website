@@ -1,0 +1,111 @@
+---
+interface Badge {
+  label: string;
+  sublabel?: string;
+}
+
+interface Props {
+  badges: Badge[];
+}
+
+const { badges } = Astro.props;
+---
+
+<section class="min-h-screen flex flex-col pt-16 px-4">
+  <!-- Spacer to push content down -->
+  <div class="flex-1"></div>
+
+  <div class="container max-w-4xl">
+    <div class="text-center space-y-8">
+      <!-- Trust badges -->
+      <div
+        class="flex flex-wrap items-center justify-center gap-3 opacity-0 animate-fade-in"
+      >
+        {
+          badges.map((badge) => (
+            <span class="badge">
+              {badge.label}
+              {badge.sublabel && (
+                <span class="ml-1.5 text-[var(--color-slate-light)]">
+                  ({badge.sublabel})
+                </span>
+              )}
+            </span>
+          ))
+        }
+      </div>
+
+      <!-- Headline -->
+      <h1
+        class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-[var(--color-navy)] opacity-0 animate-fade-in-up"
+        style="animation-delay: 0.1s"
+      >
+        Your Bonds. Your Infrastructure.<br class="hidden sm:block" />
+        Your Terms.
+      </h1>
+
+      <!-- Subheadline -->
+      <p
+        class="text-lg md:text-xl text-[var(--color-text-muted)] max-w-3xl mx-auto opacity-0 animate-fade-in-up"
+        style="animation-delay: 0.2s"
+      >
+        Sovereign bond infrastructure you actually control —<br />independent of
+        external platforms and foreign jurisdictions.
+      </p>
+
+      <!-- Secondary line -->
+      <p
+        class="text-sm text-[var(--color-slate-light)] opacity-0 animate-fade-in-up"
+        style="animation-delay: 0.25s"
+      >
+        Built for Finance Ministries &bull; Debt Management Offices &bull;
+        State-Owned Enterprises
+      </p>
+
+      <!-- CTAs -->
+      <div
+        class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 opacity-0 animate-fade-in-up"
+        style="animation-delay: 0.3s"
+      >
+        <a href="#contact" class="btn btn-primary w-full sm:w-auto">
+          Request a Briefing
+        </a>
+        <a
+          href="https://github.com/clad-sovereign/clad-studio"
+          target="_blank"
+          rel="noreferrer"
+          class="btn btn-secondary w-full sm:w-auto"
+        >
+          Technical Overview
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer to push quote down -->
+  <div class="flex-1"></div>
+
+  <!-- BIS Quote -->
+  <div class="container max-w-4xl">
+    <blockquote
+      class="max-w-3xl mx-auto text-center opacity-0 animate-fade-in-up"
+      style="animation-delay: 0.4s"
+    >
+      <p class="text-[var(--color-text-muted)] italic">
+        "Tokenised government bonds...form the foundation of a vibrant tokenised
+        financial system."
+      </p>
+      <footer class="mt-2 text-sm text-[var(--color-slate-light)]">
+        — <a
+          href="https://www.bis.org/publ/arpdf/ar2025e3.htm"
+          target="_blank"
+          rel="noreferrer"
+          class="hover:underline">Bank for International Settlements, 2025</a
+        >
+      </footer>
+    </blockquote>
+  </div>
+
+  <!-- Bottom spacer -->
+  <div class="h-12"></div>
+</section>
