@@ -1,5 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import HeroSection from "../components/HeroSection.astro";
+import Footer from "../components/Footer.astro";
 import ContactForm from "../components/ContactForm.tsx";
 import ErrorBoundary from "../components/ErrorBoundary.tsx";
 
@@ -121,141 +124,9 @@ const useCases = [
 
 <Layout>
   <main>
-    <!-- Header -->
-    <header
-      class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-warm-white)]/95 backdrop-blur-sm border-b border-[var(--color-border-light)]"
-    >
-      <div class="container flex items-center justify-between h-16">
-        <a
-          href="/"
-          class="text-lg font-semibold tracking-tight text-[var(--color-navy)]"
-        >
-          Clad Sovereign
-        </a>
-        <nav class="hidden md:flex items-center gap-8">
-          <a
-            href="#how-it-works"
-            class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >How It Works</a
-          >
-          <a
-            href="#technology"
-            class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >Technology</a
-          >
-          <a
-            href="#use-cases"
-            class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >Use Cases</a
-          >
-          <a
-            href="https://github.com/clad-sovereign"
-            target="_blank"
-            rel="noreferrer"
-            class="text-sm text-[var(--color-slate)] hover:text-[var(--color-navy)] transition-colors"
-            >GitHub</a
-          >
-        </nav>
-        <a href="#contact" class="btn btn-primary text-sm py-2 px-4">
-          Contact Us
-        </a>
-      </div>
-    </header>
+    <Header />
 
-    <!-- Hero Section -->
-    <section
-      class="min-h-screen flex flex-col pt-16 px-4"
-    >
-      <!-- Spacer to push content down -->
-      <div class="flex-1"></div>
-
-      <div class="container max-w-4xl">
-        <div class="text-center space-y-8">
-          <!-- Trust badges -->
-          <div
-            class="flex flex-wrap items-center justify-center gap-3 opacity-0 animate-fade-in"
-          >
-            {
-              badges.map((badge) => (
-                <span class="badge">
-                  {badge.label}
-                  {badge.sublabel && (
-                    <span class="ml-1.5 text-[var(--color-slate-light)]">
-                      ({badge.sublabel})
-                    </span>
-                  )}
-                </span>
-              ))
-            }
-          </div>
-
-          <!-- Headline -->
-          <h1
-            class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-[var(--color-navy)] opacity-0 animate-fade-in-up"
-            style="animation-delay: 0.1s"
-          >
-            Your Bonds. Your Infrastructure.<br class="hidden sm:block" />
-            Your Terms.
-          </h1>
-
-          <!-- Subheadline -->
-          <p
-            class="text-lg md:text-xl text-[var(--color-text-muted)] max-w-3xl mx-auto opacity-0 animate-fade-in-up"
-            style="animation-delay: 0.2s"
-          >
-            Open-source infrastructure for tokenized debt issuance. Configure
-            your bond, approve with a tap, settle in seconds. Fewer
-            intermediaries. No lock-in.
-          </p>
-
-          <!-- CTAs -->
-          <div
-            class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 opacity-0 animate-fade-in-up"
-            style="animation-delay: 0.3s"
-          >
-            <a href="#contact" class="btn btn-primary w-full sm:w-auto">
-              Request a Briefing
-            </a>
-            <a
-              href="https://github.com/clad-sovereign/clad-studio"
-              target="_blank"
-              rel="noreferrer"
-              class="btn btn-secondary w-full sm:w-auto"
-            >
-              Technical Overview
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Spacer to push quote down -->
-      <div class="flex-1"></div>
-
-      <!-- BIS Quote -->
-      <div class="container max-w-4xl">
-        <blockquote
-          class="max-w-3xl mx-auto text-center opacity-0 animate-fade-in-up"
-          style="animation-delay: 0.4s"
-        >
-          <p class="text-[var(--color-text-muted)] italic">
-            "Tokenised government bonds...form the foundation of a vibrant
-            tokenised financial system."
-          </p>
-          <footer class="mt-2 text-sm text-[var(--color-slate-light)]">
-            — <a
-              href="https://www.bis.org/publ/arpdf/ar2025e3.htm"
-              target="_blank"
-              rel="noreferrer"
-              class="hover:underline"
-              >Bank for International Settlements, 2025</a
-            >
-          </footer>
-        </blockquote>
-      </div>
-
-      <!-- Bottom spacer -->
-      <div class="h-24"></div>
-    </section>
+    <HeroSection badges={badges} />
 
     <!-- Problem/Solution Section -->
     <section class="section bg-white border-y border-[var(--color-border)]">
@@ -528,33 +399,8 @@ const useCases = [
               <span class="font-medium">clad-studio</span>
             </div>
             <p class="text-sm text-white/60">
-              Web application and Substrate pallet for bond configuration and
-              issuance.
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/clad-sovereign/clad-mobile"
-            target="_blank"
-            rel="noreferrer"
-            class="p-6 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors group"
-          >
-            <div class="flex items-center gap-3 mb-3">
-              <svg
-                class="w-6 h-6 text-white/60 group-hover:text-white transition-colors"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"
-                ></path>
-              </svg>
-              <span class="font-medium">clad-mobile</span>
-            </div>
-            <p class="text-sm text-white/60">
-              iOS and Android app for biometric transaction signing.
+              Open-source blockchain runtime for tokenized sovereign debt. Built
+              on Polkadot SDK.
             </p>
           </a>
 
@@ -573,11 +419,34 @@ const useCases = [
                   d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                 ></path>
               </svg>
-              <span class="font-medium">Security Model</span>
+              <span class="font-medium">Standalone Sovereignty</span>
             </div>
             <p class="text-sm text-white/60">
-              Air-gapped signing, biometric protection, role-based access
-              control.
+              Your own chain, your own validators. No shared security
+              dependencies or external governance.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-lg bg-white/5 border border-white/10">
+            <div class="flex items-center gap-3 mb-3">
+              <svg
+                class="w-6 h-6 text-white/60"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                ></path>
+              </svg>
+              <span class="font-medium">Multi-Sig Governance</span>
+            </div>
+            <p class="text-sm text-white/60">
+              N-of-M threshold signing for ministry committees. No single point
+              of failure.
             </p>
           </div>
         </div>
@@ -680,14 +549,6 @@ const useCases = [
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 border-t border-[var(--color-border)]">
-      <div class="container">
-        <p class="text-center text-xs text-[var(--color-slate-light)]">
-          &copy; {new Date().getFullYear()} WIDEAS Technologies · Clad Sovereign ·
-          Apache 2.0
-        </p>
-      </div>
-    </footer>
+    <Footer />
   </main>
 </Layout>
