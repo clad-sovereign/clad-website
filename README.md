@@ -1,5 +1,7 @@
 # Clad Sovereign Website
 
+[![CI](https://github.com/clad-sovereign/clad-website/actions/workflows/ci.yml/badge.svg)](https://github.com/clad-sovereign/clad-website/actions/workflows/ci.yml)
+
 Marketing website for Clad Sovereign — open-source infrastructure for tokenized sovereign debt issuance.
 
 ## Tech Stack
@@ -12,15 +14,18 @@ Marketing website for Clad Sovereign — open-source infrastructure for tokenize
 
 ```sh
 # Install dependencies
-yarn install
+bun install
 
 # Start dev server at localhost:4321
-yarn dev
+bun run dev
 
 # Build for production
-yarn build
+bun run build
 
 # Preview production build
-yarn preview
+bun run preview
+
+# Run tests
+bun run test
 ```
 
